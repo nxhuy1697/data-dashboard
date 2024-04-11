@@ -1,0 +1,1 @@
+*{box-sizing:border-box;max-width:1440px;margin:auto;padding:0;scroll-behavior:smooth}.card__container{display:grid;grid-template-columns:1fr}@media screen and (min-width: 768px){.card__container{grid-template-columns:1fr 1fr 1fr}}.card__container-data{padding:20px}/*# sourceMappingURL=index.min.css.map */

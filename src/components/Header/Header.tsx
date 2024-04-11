@@ -13,21 +13,27 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Login, Logout } from "@mui/icons-material";
+import { ColorLens, Login, Logout } from "@mui/icons-material";
+import ThemeToggleButton from "../ThemeToggleButton";
+import { useMediaQuery } from "@mui/material";
 
 const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+// const settings = ["Profile", "Account", "Dashboard", "Logout"];
+export type HeaderProps = {
+  ColorModeContext : React.Context<{toggleColorMode: () => void;}>
+}
 
-const Header = () => {
+const Header = (props : HeaderProps) => {
+  const {ColorModeContext} = props;
   const { data: session } = useSession();
   const userProfileImg = session?.user?.image as string;
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
+  const tabletCheck = useMediaQuery("(min-width: 768px)");
+  const handleOpenNavMenu = (event:any) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
+  const handleOpenUserMenu = (event:any) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -59,7 +65,7 @@ const Header = () => {
               textDecoration: "none",
             }}
           >
-            LOGO
+            DataSoft
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -128,12 +134,18 @@ const Header = () => {
               </Button>
             ))}
           </Box>
-          <Box sx={{paddingRight: 5}}>
-            <Typography>
-              Signed in as {session?.user?.email}
-            </Typography>
-          </Box>
-
+          {
+            //resposive resolution 768px 
+            tabletCheck && (
+              <Box sx={{paddingRight: 5}}>
+              <Typography>
+                Signed in as {session?.user?.email}
+              </Typography>
+            </Box>
+            )
+         
+          }
+            <ThemeToggleButton ColorModeContext={ColorModeContext}/>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open profile settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
