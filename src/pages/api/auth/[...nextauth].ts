@@ -9,11 +9,12 @@ export const authOptions: NextAuthOptions = {
       authorization: {
         params: {
           prompt: "consent",
-          access_type: 'offline',
-          response_type: 'code'
-        }
-      }
-    })
-  ]
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+    }),
+  ],
 };
+
 export default NextAuth(authOptions);

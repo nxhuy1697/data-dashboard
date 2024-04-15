@@ -1,19 +1,25 @@
+import { CSSObject } from "@mui/system";
 import * as React from "react";
-import { useTheme, Theme, CSSObject } from "@mui/material/styles";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import HomeIcon from "@mui/icons-material/Home";
-import EqualizerIcon from '@mui/icons-material/Equalizer';
-import Drawer from "@mui/material/Drawer";
+import EqualizerIcon from "@mui/icons-material/Equalizer";
 import { ExitToApp, Person2, Settings } from "@mui/icons-material";
 import NextLink from "next/link";
+
+
+import {
+  Divider,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Theme,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { signOut } from "next-auth/react";
 
 const drawerWidth = 200;
@@ -38,41 +44,54 @@ const closedMixin = (theme: Theme): CSSObject => ({
 });
 
 const menuRouteList = ["data", "profile", "settings", ""];
-const menuListTranslation = ["Data", "Profile", "Settings", "Sign out"];
-const menuListIcon = [<EqualizerIcon />, <Person2 />, <Settings />, <ExitToApp />];
+const menuListTranslations = ["Data", "Profile", "Settings", "Sign Out"];
+const menuListIcons = [
+  <EqualizerIcon />,
+  <Person2 />,
+  <Settings />,
+  <ExitToApp />,
+];
 
-export default function SideMenu() {
+const SideMenu = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const mobileCheck = useMediaQuery("(min-width: 600px)");
 
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
 
   const handleListItemButtonClick = (text: string) => {
-    text === "Sign out" ? signOut() : null;
+    text === "Sign Out" ? signOut() : null;
     setOpen(false);
-  }
+  };
+
   return (
     <Drawer
       variant="permanent"
+      anchor="left"
       open={open}
+      className='sideMenu'
       sx={{
         width: drawerWidth,
-        flexShrink: 0,
-        whiteSpace: "nowrap",
-        boxSizing: "border-box",
-        ...(open && {
-          ...openedMixin(theme),
-          "& .MuiDrawer-paper": openedMixin(theme),
-        }),
-        ...(!open && {
-          ...closedMixin(theme),
-          "& .MuiDrawer-paper": closedMixin(theme),
-        }),
+        [`& .MuiDrawer-paper`]: {
+          left: 0,
+          top: mobileCheck ? 64 : 57,
+          flexShrink: 0,
+          whiteSpace: "nowrap",
+          boxSizing: "border-box",
+          ...(open && {
+            ...openedMixin(theme),
+            "& .MuiDrawer-paper": openedMixin(theme),
+          }),
+          ...(!open && {
+            ...closedMixin(theme),
+            "& .MuiDrawer-paper": closedMixin(theme),
+          }),
+        },
       }}
     >
-      <div className="drawHeader">
+      <div className='drawHeader'>
         <IconButton onClick={handleDrawerToggle}>
           {theme.direction === "rtl" ? (
             <ChevronRightIcon />
@@ -83,38 +102,46 @@ export default function SideMenu() {
       </div>
       <Divider />
       <Divider />
-
       <List>
-        {menuListTranslation.map((text, index) => (
+        {menuListTranslations.map((text, index) => (
           <ListItem key={text} disablePadding sx={{ display: "block" }}>
-            <NextLink href={`/dashboard/${menuRouteList[index]}`}
-            className="link"
-             >
-            <ListItemButton
-            onClick={() => handleListItemButtonClick(text)}
-            title={text}
-            aria-label={text}
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
+            <NextLink
+              className='link'
+              href={`/dashboard/${menuRouteList[index]}`}
             >
-              <ListItemIcon
+              <ListItemButton
+                onClick={() => handleListItemButtonClick(text)}
+                title={text}
+                aria-label={text}
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                {menuListIcon[index]}
-              </ListItemIcon>
-              <ListItemText primary={text} sx={{color: theme.palette.text.primary, opacity: open ? 1 : 0 }} />
-            </ListItemButton>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  {menuListIcons[index]}
+                </ListItemIcon>
+                <ListItemText
+                  primary={text}
+                  sx={{
+                    color: theme.palette.text.primary,
+                    opacity: open ? 1 : 0,
+                  }}
+                />{" "}
+              </ListItemButton>
             </NextLink>
           </ListItem>
         ))}
       </List>
     </Drawer>
   );
-}
+};
+
+export default SideMenu;

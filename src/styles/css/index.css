@@ -29,4 +29,10 @@
   justify-content: "flex-end";
   padding: 10px;
   margin: 0px;
+}
+
+.layout {
+  padding: 0 60px;
+  max-width: 85rem;
+  margin: auto;
 }/*# sourceMappingURL=index.css.map */

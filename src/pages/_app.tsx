@@ -9,6 +9,7 @@ import lightTheme from "@/styles/theme/lightTheme";
 import darkTheme from "@/styles/theme/darkTheme";
 import Header from "@/components/Header";
 import Layout from "@/components/Layout";
+import { Padding } from "@mui/icons-material";
 
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
@@ -45,7 +46,7 @@ export default function App({
         <SessionProvider session={session}>
         <CssBaseline/>
           <Header ColorModeContext={ColorModeContext}/>
-          <Layout>
+          <Layout > 
           <Component {...pageProps} />
 
           </Layout>
