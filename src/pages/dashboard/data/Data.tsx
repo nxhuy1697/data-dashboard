@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Data() {
   return (
-    <div>Data</div>
+    <h1>Data</h1>
   )
 }

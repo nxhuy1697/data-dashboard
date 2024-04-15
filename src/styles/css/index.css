@@ -6,6 +6,10 @@
   scroll-behavior: smooth;
 }
 
+.link {
+  text-decoration: none;
+}
+
 .card__container {
   display: grid;
   grid-template-columns: 1fr;
@@ -17,4 +21,12 @@
 }
 .card__container-data {
   padding: 20px;
+}
+
+.drawHeader {
+  display: flex;
+  align-items: center;
+  justify-content: "flex-end";
+  padding: 10px;
+  margin: 0px;
 }/*# sourceMappingURL=index.css.map */

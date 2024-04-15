@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import lightTheme from "@/styles/theme/lightTheme";
 import darkTheme from "@/styles/theme/darkTheme";
 import Header from "@/components/Header";
+import Layout from "@/components/Layout";
 
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
@@ -16,7 +17,7 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
-  const [mode, setMode] = React.useState('dark');
+  const [mode, setMode] = React.useState('light');
 
   const colorMode = React.useMemo(
     () => ({
@@ -44,7 +45,10 @@ export default function App({
         <SessionProvider session={session}>
         <CssBaseline/>
           <Header ColorModeContext={ColorModeContext}/>
+          <Layout>
           <Component {...pageProps} />
+
+          </Layout>
         </SessionProvider>
       </ThemeProvider>
     </ColorModeContext.Provider>
